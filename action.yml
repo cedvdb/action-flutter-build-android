@@ -7,10 +7,10 @@ inputs:
   build-cmd:
     description: The full build command, can be used to add arguments
     default: flutter build apk --release
-  release-key:
-    description: "key with which to sign the app"
+  keystore-base64:
+    description: "keystore with which to sign the app"
     required: true
-  release-key-password:
+  keystore-password:
     description: "The password for the playstore key used to sign the app"
     required: true
 
@@ -56,8 +56,8 @@ runs:
         echo "storePassword=$RELEASE_KEY_PASSWORD" >> key.properties
         echo "keyPassword=$RELEASE_KEY_PASSWORD" >> key.properties
       env:
-        RELEASE_KEY: ${{ inputs.release-key }}
-        RELEASE_KEY_PASSWORD: ${{ inputs.release-key-password }}
+        KEYSTORE: ${{ inputs.keystore-base64 }}
+        KEYSTORE_PASSWORD: ${{ inputs.keystore-password }}
       working-directory: ${{ inputs.working-directory }}/android
 
     - name: Build

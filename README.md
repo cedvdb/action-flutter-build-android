@@ -39,8 +39,8 @@ jobs:
 
       - uses: cedvdb/flutter-build-android
         with:
-          release-key: ${{ secrets.ANDROID_RELEASE_KEY }}
-          release-key-password: "${{ secrets.ANDROID_RELEASE_KEY_PASSWORD }}"
+          keystore-base64: ${{ secrets.ANDROID_RELEASE_KEY }}
+          keystore-password: "${{ secrets.ANDROID_RELEASE_KEY_PASSWORD }}"
           # optionals
           build-cmd: flutter build apk --release --flavor dev
           working-directory: ./
