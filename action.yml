@@ -23,6 +23,14 @@ runs:
         java-version: "17.x"
         cache: "gradle"
 
+    - uses: subosito/flutter-action@v2
+      with:
+        channel: "stable"
+        cache: true
+
+    - run: flutter --version
+      shell: bash
+
     - name: Decode keystore and create jks and properties file for signing the app
       shell: bash
       run: |
