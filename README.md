@@ -50,5 +50,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: release-apk
+          # Try running the build locally with the build command to be sure of this path
           path: build/app/outputs/flutter-apk/app-dev-release.apk
 ```
