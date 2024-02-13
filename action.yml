@@ -23,9 +23,6 @@ runs:
         java-version: "17.x"
         cache: "gradle"
 
-    - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
-
     - name: Decode keystore and create jks and properties file for signing the app
       shell: bash
       run: |
@@ -37,7 +34,7 @@ runs:
       env:
         RELEASE_KEY: ${{ inputs.release-key }}
         RELEASE_KEY_PASSWORD: ${{ inputs.release-key-password }}
-      working-directory: ${{ inputs.working-directory }}
+      working-directory: ${{ inputs.working-directory }}/android
 
     - name: build
       run: ${{ inputs.build-cmd }}
