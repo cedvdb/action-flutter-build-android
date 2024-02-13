@@ -17,13 +17,27 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/setup-java@v3
+    - name: Check java found
+      run: which java
+      id: check_java
+      shell: bash
+
+    - name: Install java
+      if: ${{ !contains(steps.check_java.outputs, 'not found')}}
+      uses: actions/setup-java@v3
       with:
         distribution: "zulu"
         java-version: "17.x"
         cache: "gradle"
 
-    - uses: subosito/flutter-action@v2
+    - name: Check flutter found
+      run: which flutter
+      id: check_flutter
+      shell: bash
+
+    - name: Setup flutter
+      if: ${{ !contains(steps.check_flutter.outputs, 'not found')}}
+      uses: subosito/flutter-action@v2
       with:
         channel: "stable"
         cache: true
@@ -44,7 +58,7 @@ runs:
         RELEASE_KEY_PASSWORD: ${{ inputs.release-key-password }}
       working-directory: ${{ inputs.working-directory }}/android
 
-    - name: build
+    - name: Build
       run: ${{ inputs.build-cmd }}
       shell: bash
       working-directory: ${{ inputs.working-directory }}
