@@ -18,13 +18,17 @@ runs:
   using: "composite"
   steps:
     - name: Check java found
-      run: java --version
       id: check_java
       shell: bash
-      continue-on-error: true
+      run: |
+        if java --version; then
+            echo "installed=true" >> "$GITHUB_OUTPUT"
+        else
+            echo "installed=false" >> "$GITHUB_OUTPUT"
+        fi
 
     - name: Install java
-      if: steps.check_java.outcome == 'failure'
+      if: steps.check_java.outputs.installed == 'false'
       uses: actions/setup-java@v3
       with:
         distribution: "zulu"
@@ -32,13 +36,18 @@ runs:
         cache: "gradle"
 
     - name: Check flutter found
-      run: flutter --version
       id: check_flutter
       shell: bash
       continue-on-error: true
+      run: |
+        if flutter --version; then
+            echo "installed=true" >> "$GITHUB_OUTPUT"
+        else
+            echo "installed=false" >> "$GITHUB_OUTPUT"
+        fi
 
     - name: Setup flutter
-      if: steps.check_flutter.outcome == 'failure'
+      if: steps.check_flutter.outputs.installed == 'false'
       uses: subosito/flutter-action@v2
       with:
         channel: "stable"
