@@ -42,7 +42,7 @@ jobs:
           release-key: ${{ secrets.ANDROID_RELEASE_KEY }}
           release-key-password: "${{ secrets.ANDROID_RELEASE_KEY_PASSWORD }}"
           # optionals
-          build-cmd: flutter build apk --release
+          build-cmd: flutter build apk --release --flavor dev
           working-directory: ./
 
           
@@ -50,5 +50,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: release-apk
-          path: build/app/outputs/flutter-apk/app-${{ inputs.flavor }}-release.apk
+          path: build/app/outputs/flutter-apk/app-dev-release.apk
 ```
