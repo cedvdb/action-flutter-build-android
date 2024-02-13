@@ -21,9 +21,10 @@ runs:
       run: which java
       id: check_java
       shell: bash
+      continue-on-error: true
 
     - name: Install java
-      if: ${{ !contains(steps.check_java.outputs, 'not found')}}
+      if: steps.check_java.outcome == 'failure'
       uses: actions/setup-java@v3
       with:
         distribution: "zulu"
@@ -34,9 +35,10 @@ runs:
       run: which flutter
       id: check_flutter
       shell: bash
+      continue-on-error: true
 
     - name: Setup flutter
-      if: ${{ !contains(steps.check_flutter.outputs, 'not found')}}
+      if: steps.check_flutter.outcome == 'failure'
       uses: subosito/flutter-action@v2
       with:
         channel: "stable"
