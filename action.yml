@@ -1,0 +1,45 @@
+name: flutter-build-android
+description: Builds an apk or appbundle
+inputs:
+  working-directory:
+    description: The root directory of the flutter app within this repository
+    default: ./
+  build-cmd:
+    description: The full build command, can be used to add arguments
+    default: flutter build apk --release
+  release-key:
+    description: "key with which to sign the app"
+    required: true
+  release-key-password:
+    description: "The password for the playstore key used to sign the app"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-java@v3
+      with:
+        distribution: "zulu"
+        java-version: "17.x"
+        cache: "gradle"
+
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+
+    - name: Decode keystore and create jks and properties file for signing the app
+      shell: bash
+      run: |
+        echo "$RELEASE_KEY" | base64 --decode > app/keystore.jks
+        echo "storeFile=keystore.jks" >> key.properties
+        echo "keyAlias=upload" >> key.properties
+        echo "storePassword=$RELEASE_KEY_PASSWORD" >> key.properties
+        echo "keyPassword=$RELEASE_KEY_PASSWORD" >> key.properties
+      env:
+        RELEASE_KEY: ${{ inputs.release-key }}
+        RELEASE_KEY_PASSWORD: ${{ inputs.release-key-password }}
+      working-directory: ${{ inputs.working-directory }}
+
+    - name: build
+      run: ${{ inputs.build-cmd }}
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
