@@ -18,7 +18,7 @@ runs:
   using: "composite"
   steps:
     - name: Check java found
-      run: which java
+      run: java --version
       id: check_java
       shell: bash
       continue-on-error: true
@@ -32,7 +32,7 @@ runs:
         cache: "gradle"
 
     - name: Check flutter found
-      run: which flutter
+      run: flutter --version
       id: check_flutter
       shell: bash
       continue-on-error: true
