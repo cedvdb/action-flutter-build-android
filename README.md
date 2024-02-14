@@ -22,7 +22,7 @@ base64 -i path/to/upload-keystore.jks
 
 You should end up with those values as secrets (you can give them any name).
 
-![env example](env.png)
+![secrets](secrets.png)
 
 # 3. Use the action
 
