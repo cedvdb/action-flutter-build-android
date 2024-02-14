@@ -47,7 +47,6 @@ jobs:
           keystore-password: "${{ secrets.ANDROID_RELEASE_KEY_PASSWORD }}"
           # optionals
           build-cmd: flutter build apk --release --flavor dev
-          working-directory: ./
 
           
       - name: Archive APK
