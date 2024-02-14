@@ -35,8 +35,8 @@ on:
       - main
 
 jobs:
-  android-release-build:
-    name: android-release-build
+  build:
+    name: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
