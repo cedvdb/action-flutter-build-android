@@ -1,6 +1,9 @@
 name: flutter-build-android
 description: Builds an apk or appbundle
 inputs:
+  working-directory:
+    description: The root directory of the flutter app within this repository
+    default: ./
   build-cmd:
     description: The full build command, can be used to add arguments
     default: flutter build apk --release
@@ -63,8 +66,9 @@ runs:
       env:
         KEYSTORE: ${{ inputs.keystore-base64 }}
         KEYSTORE_PASSWORD: ${{ inputs.keystore-password }}
-      working-directory: ./android
+      working-directory: ${{ inputs.working-directory }}/android
 
     - name: Build
       run: ${{ inputs.build-cmd }}
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
