@@ -38,7 +38,6 @@ runs:
     - name: Check flutter found
       id: check_flutter
       shell: bash
-      continue-on-error: true
       run: |
         if flutter --version; then
             echo "installed=true" >> "$GITHUB_OUTPUT"
@@ -59,11 +58,11 @@ runs:
     - name: Decode keystore and create jks and properties file for signing the app
       shell: bash
       run: |
-        echo "$RELEASE_KEY" | base64 --decode > app/keystore.jks
+        echo "$KEYSTORE" | base64 --decode > app/keystore.jks
         echo "storeFile=keystore.jks" >> key.properties
         echo "keyAlias=upload" >> key.properties
-        echo "storePassword=$RELEASE_KEY_PASSWORD" >> key.properties
-        echo "keyPassword=$RELEASE_KEY_PASSWORD" >> key.properties
+        echo "storePassword=$KEYSTORE_PASSWORD" >> key.properties
+        echo "keyPassword=$KEYSTORE_PASSWORD" >> key.properties
       env:
         KEYSTORE: ${{ inputs.keystore-base64 }}
         KEYSTORE_PASSWORD: ${{ inputs.keystore-password }}
