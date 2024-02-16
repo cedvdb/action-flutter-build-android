@@ -2,7 +2,7 @@ name: flutter-build-android
 description: Builds an apk or appbundle
 branding:
   icon: box
-  color: blue
+  color: green
 inputs:
   working-directory:
     description: The root directory of the flutter app within this repository
