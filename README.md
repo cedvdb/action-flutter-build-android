@@ -41,7 +41,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: cedvdb/flutter-build-android
+      - uses: cedvdb/action-flutter-build-android@v1
         with:
           keystore-base64: ${{ secrets.ANDROID_RELEASE_KEY }}
           keystore-password: "${{ secrets.ANDROID_RELEASE_KEY_PASSWORD }}"
